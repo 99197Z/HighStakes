@@ -1,4 +1,10 @@
 #include "main.h"
+#include "pros/motors.hpp"
+
+#define FL 1
+#define FR 11
+#define AL 2
+#define AR 12
 /**
  * A callback function for LLEMU's center button.
  *
@@ -74,8 +80,15 @@ void autonomous() {}
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor left_mtr(1);
-	pros::Motor right_mtr(2);
+
+	pros::Motor fl_mtr(FL);
+	pros::Motor fr_mtr(FR);
+	pros::Motor al_mtr(AL);
+	pros::Motor ar_mtr(AR);
+	pros::MotorGroup left_mtr({fl_mtr,al_mtr});
+	pros::MotorGroup right_mtr({fr_mtr,ar_mtr});
+	
+
 
 	while (true) {
 		pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
